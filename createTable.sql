@@ -12,7 +12,7 @@ CREATE TABLE Products
   product_id INT NOT NULL,
   product_name VARCHAR(30) NOT NULL,
   description VARCHAR(120),
-  price INT NOT NULL,
+  price DECIMAL(10,2) NOT NULL,
   stock_quantity INT NOT NULL,
   category_id INT NOT NULL
 );
@@ -38,7 +38,7 @@ CREATE TABLE Orders
 (
   order_id INT NOT NULL,
   order_date DATE,
-  total_amount INT NOT NULL,
+  total_amount DECIMAL(10,2) DEFAULT 0,
   customer_id INT NOT NULL
 );
 
@@ -80,11 +80,10 @@ ALTER TABLE Order_Items ADD FOREIGN KEY(product_id) REFERENCES Products(product_
     Check
     Products: CK(price > 0)
     Customers: CK(email - @ .)
-    Orders: CK(total_amount > 0)
     Order_Items: CK(quantity > 0)
  */
 
 ALTER TABLE Products ADD CONSTRAINT CK_PRODUCT_PRICE CHECK(price > 0);
 ALTER TABLE Customers ADD CONSTRAINT CK_CUSTOMER_EMAIL CHECK(email LIKE '_%@%_.%_');
-ALTER TABLE Orders ADD CONSTRAINT CK_ORDER_TOTAL_AMOUNT CHECK(total_amount > 0);
 ALTER TABLE Order_Items ADD CONSTRAINT CK_ORDER_ITEMS_QUANTITY CHECK (quantity > 0);
+
